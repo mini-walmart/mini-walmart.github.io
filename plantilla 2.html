@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Mini Walmart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        header p {
+            font-size: 1.3em;
+            animation: fadeIn 2.5s ease-in-out;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #ff6f61;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: fadeIn 3s ease-in-out;
+        }
+        .cta-button:hover {
+            background-color: #ff3b2f;
+            transform: scale(1.05);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .features {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .feature {
+            flex: 1;
+            text-align: center;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        .feature h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #6a11cb;
+        }
+        .feature i {
+            font-size: 3em;
+            color: #6a11cb;
+            margin-bottom: 15px;
+        }
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            margin-top: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .carousel img {
+            width: 100%;
+            transition: transform 0.5s ease;
+        }
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .carousel-control.prev {
+            left: 10px;
+        }
+        .carousel-control.next {
+            right: 10px;
+        }
+        .testimonials {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .testimonial {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .testimonial:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        .testimonial img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .faq {
+            margin-top: 40px;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        .faq-question {
+            padding: 15px;
+            background-color: #6a11cb;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 15px;
+            display: none;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #6a11cb;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Bienvenido a Mini Walmart</h1>
+        <p>Tu destino para comprar y vender productos de manera fácil y segura.</p>
+        <a href="walmart.html" class="cta-button">¡Empieza ahora!</a>
+    </header>
+
+    <div class="container">
+        <!-- Carrusel de productos destacados -->
+        <section class="carousel">
+            <button class="carousel-control prev" onclick="prevImage()">&#10094;</button>
+            <img src="pollo.jpg" alt="Producto 1" id="carousel-image">
+            <button class="carousel-control next" onclick="nextImage()">&#10095;</button>
+        </section>
+
+        <!-- Sección de características -->
+        <section class="features">
+            <div class="feature">
+                <i class="fas fa-box-open"></i>
+                <h2>Amplia Variedad</h2>
+                <p>Descubre productos únicos en diferentes categoriias.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Compras Seguras</h2>
+                <p>Protegemos tus datos y transacciones en todo momento.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-shipping-fast"></i>
+                <h2>Envios Rápidos</h2>
+                <p>Recibe tus pedidos en tiempo récord.</p>
+            </div>
+        </section>
+
+        <!-- Testimonios de usuarios -->
+        <section class="testimonials">
+            <div class="testimonial">
+                <img src="usuario.png" alt="Usuario 1">
+                <p>"¡Increible experiencia! Encontré todo lo que necesitaba."</p>
+                <p><strong>- Juan Pérez</strong></p>
+            </div>
+            <div class="testimonial">
+                <img src="usuario.png" alt="Usuario 2">
+                <p>"Muy fácil de usar y los envíos son super rápidos."</p>
+                <p><strong>- María Gómez</strong></p>
+            </div>
+            <div class="testimonial">
+                <img src="usuario.png" alt="Usuario 3">
+                <p>"La mejor plataforma para comprar en línea."</p>
+                <p><strong>- Carlos López</strong></p>
+            </div>
+        </section>
+
+        <!-- Sección de preguntas frecuentes (FAQ) -->
+        <section class="faq">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(1)">
+                    ¿Cómo comienzo a comprar?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer" id="answer1">
+                    Solo haz clic en el botón "¡Empieza ahora!" y serás redirigido a la página del mercado.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(2)">
+                    ¿Es seguro comprar aquí?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer" id="answer2">
+                    Sí, utilizamos tecnología de encriptación para proteger tus datos.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(3)">
+                    ¿Cómo contacto al soporte?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer" id="answer3">
+                    Puedes escribirnos a soporte@mercadonline.com.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer con redes sociales -->
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2023 Mini Walmart. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Carrusel de imágenes
+        const images = [
+            "pollo.jpg",
+            "https://via.placeholder.com/1200x400/ff6f61",
+            "https://via.placeholder.com/1200x400/6a11cb"
+        ];
+        let currentImageIndex = 0;
+        const carouselImage = document.getElementById('carousel-image');
+
+        function changeImage(index) {
+            currentImageIndex = index;
+            carouselImage.src = images[currentImageIndex];
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            changeImage(currentImageIndex);
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            changeImage(currentImageIndex);
+        }
+
+        setInterval(nextImage, 5000);
+
+        // Mostrar/ocultar respuestas en FAQ
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+
+</body>
+</html>
