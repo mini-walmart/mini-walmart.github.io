@@ -601,13 +601,27 @@ footer {
           <span class="etiqueta-disponibilidad disponible">Disponible</span>
       </div>
         
-        <div class="producto" data-id="7" data-disponible="true">
-  <img src="lomoahumado.webp" alt="Jamonlomo">
-  <h3>Lomo Ahumado<h3>
-  <p>Precio: $5.00 USD x LB</p>
-  <button class="btn agregar-al-carrito" data-id="7" data-nombre="Lomo Ahumado" data-precio="5.00">Agregar al carrito</button>
-  <span class="etiqueta-disponibilidad disponible">Disponible</span>
-</div>
+        <div class="producto" data-id="7" data-disponible="true" data-precio="5.00">
+          <img src="lomo.jpg" alt="Lomo de Cerdo">
+          <h3>Lomo Ahumado </h3>
+          <p>Precio por libra: $5.00 USD</p>
+          
+          <!-- Selector de peso -->
+          <label for="peso-3">Seleccionar Peso:</label>
+          <select id="peso-3" class="selector-peso" data-id="3">
+               <option value="8.95">8.95 libras</option>
+               <option value="9.25">9.25 libras</option>
+               <option value="9.67">9.67 libras</option>
+               <option value="9.81">9.81 libras</option>
+               <option value="10.00">10.00 libras</option>
+               <option value="10.37">10.37 libras</option>
+            
+          </select>
+          
+          <!-- Botón de agregar -->
+          <button class="btn agregar-al-carrito" data-id="7" data-nombre="Lomo Ahumado" data-precio="5.00">Agregar al carrito</button>
+          <span class="etiqueta-disponibilidad disponible">Disponible</span>
+      </div>
       
   <div class="producto" data-id="4" data-disponible="false">
       <img src="picadillo.jpg" alt="Picadillo">
