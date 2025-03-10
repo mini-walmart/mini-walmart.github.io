@@ -17,13 +17,14 @@
             color: #333;
         }
         header {
-            background: linear-gradient(to bottom, #6c13be, #000000); /* Degradado de rosado a negro en el fondo */
-            color: white; /* Color blanco para el texto */
-            padding: 1.5rem; /* Espaciado en el encabezado */
-            text-align: center; /* Centra el texto en el encabezado */
-            top: 0px;
-            position: relative;
-        }
+    background: linear-gradient(to bottom, #6c13be, #000000);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
         nav ul {
             list-style: none;
             padding: 0;
@@ -89,18 +90,28 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 250px; /* Ancho fijo para el contenedor del producto */
+    width: 100%; /* Ajuste automático */
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 300px; /* Limita el tamaño máximo */
 }
+
+/* Imágenes adaptables */
 .producto img {
-    width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
-    height: 200px; /* Establece una altura fija para todas las imágenes */
-    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor manteniendo la relación de aspecto */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    width: 100%; 
+    height: auto;
+    object-fit: cover;
+}
+
+/* Ajuste de la cuadrícula para mejor responsividad */
+.productos {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Más flexible */
+    gap: 20px;
 }
 
 /* Animación al pasar el cursor */
