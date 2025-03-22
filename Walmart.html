@@ -294,13 +294,12 @@
     </style>
 </head>
 <body>
-
     <header>
         <h1>Bienvenido a Mini Walmart</h1>
         <p>Tu destino para comprar y vender productos de manera fácil y segura.</p>
         <a href="walmart.html" class="cta-button">¡Empieza ahora!</a>
+        <a href="remesas.html" class="cta-button" style="background-color: #66ac17; margin-top: 10px;">Enviar Remesa</a>
     </header>
-
     <!-- Carrusel -->
     <div class="carousel">
         <div class="carousel-inner">
@@ -315,27 +314,37 @@
                 <img src="15_Combo-ASEO_1500x1500.jpg" alt="Producto 2">
                 <div class="carousel-caption">
                     <h2>Aseo</h2>
-                    <p>Los Mejores productos de aseo para el hogar </p>
+                    <p>Los Mejores productos de aseo para el hogar.</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="electrodomesticos.jpg" alt="Producto 3">
                 <div class="carousel-caption">
-                    <h2>Electrodomesticos</h2>
+                    <h2>Electrodomésticos</h2>
                     <p>Los equipos necesarios para la comodidad de tu familia.</p>
                 </div>
             </div>
+            <!-- Nueva imagen agregada -->
+            <div class="carousel-item">
+                <img src="remesas.jpg" alt="Nueva Imagen">
+                <div class="carousel-caption">
+                    <h2>Remesas a Cuba</h2>
+                    <p>Nunca enviar una remesa había sido tan fácil.</p>
+                </div>
+            </div>
         </div>
-
+    
         <!-- Botones de control -->
         <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
         <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
-
+    
         <!-- Indicadores de posición -->
         <div class="carousel-indicators">
             <div class="carousel-indicator active" onclick="goToSlide(0)"></div>
             <div class="carousel-indicator" onclick="goToSlide(1)"></div>
             <div class="carousel-indicator" onclick="goToSlide(2)"></div>
+            <!-- Nuevo indicador para la nueva imagen -->
+            <div class="carousel-indicator" onclick="goToSlide(3)"></div>
         </div>
     </div>
 
