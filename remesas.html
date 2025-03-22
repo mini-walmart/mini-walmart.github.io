@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envía tus remesas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+       /* Estilo general del cuerpo */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo del encabezado */
+header {
+    background-color: #6c13be;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #ccc;
+}
+
+/* Estilo del cartel de tasas de cambio */
+.cartel-tasas {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: center;
+}
+
+.cartel-tasas p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Estilo del botón de abrir el modal */
+.btn-modal {
+    background-color: #6c13be;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+.btn-modal:hover {
+    background-color: #5a0fa5;
+    transform: translateY(-2px);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    transition: opacity 0.3s ease;
+}
+
+/* Contenido del modal con animación */
+.modal-contenido {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Clase para activar animación al mostrar el modal */
+.modal.show .modal-contenido {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Botón de cerrar el modal */
+.cerrar {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #6c13be;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.cerrar:hover {
+    color: #5a0fa5;
+}
+
+/* Campos de entrada y botones */
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Efecto al enfocar los campos */
+input:focus, select:focus {
+    border-color: #6c13be;
+    box-shadow: 0 0 10px rgba(108, 19, 190, 0.3);
+    outline: none;
+}
+
+/* Efecto para los botones */
+button {
+    background-color: #6c13be;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #5a0fa5;
+    transform: translateY(-2px);
+}
+
+/* Placeholder personalizado */
+::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Botón de envío del formulario */
+button[type="submit"] {
+    background-color: #6c13be;
+}
+
+button[type="submit"]:hover {
+    background-color: #5a0fa5;
+}
+
+/* Sección de contacto */
+#contacto {
+    padding: 40px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+#contacto h2 {
+    font-size: 2rem;
+    color: #6c13be;
+}
+
+#contacto form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#contacto input,
+#contacto textarea,
+#contacto button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+#contacto button {
+    background-color: #6c13be;
+    color: white;
+    font-weight: bold;
+}
+
+#contacto button:hover {
+    background-color: #5a0fa5;
+}
+
+/* Estilo para el footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #6c13be;
+    color: white;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <h1>Servicio de Remesas</h1>
+        <nav>
+            <ul>
+                <li><a href="#tasas">Tasas de Cambio</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Cartel de tasas de cambio -->
+    <section id="tasas">
+        <h2>Tasas de Cambio</h2>
+        <div class="cartel-tasas">
+            <p>💵 <strong>100 USD</strong> vía Zelle → <strong>34,000 CUP</strong></p>
+            <p>🏦 <strong>105 USD</strong> vía Zelle → <strong>100 USD</strong></p>
+            <p>💳 <strong>100 USD</strong> vía Zelle → <strong>100 MLC</strong></p>
+            <p>⚠️ <strong>Menos de 100 USD</strong> → <strong>320 CUP por cada dólar</strong></p>
+            <button class="btn-modal" onclick="abrirModal()">Enviar Remesa</button>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal()">&times;</span>
+            <h2>Formulario de Envío de Remesas</h2>
+            <form id="form-remesa">
+                <input type="number" id="cantidad" name="cantidad" placeholder="Cantidad a enviar (USD)" min="1" required>
+                <input type="text" id="nombre-remitente" name="nombre-remitente" placeholder="Nombre del remitente" required>
+                <input type="text" id="nombre-receptor" name="nombre-receptor" placeholder="Nombre del receptor" required>
+                <input type="tel" id="telefono-receptor" name="telefono-receptor" placeholder="Teléfono del receptor" required>
+                <input type="text" id="direccion-receptor" name="direccion-receptor" placeholder="Dirección del receptor" required>
+                <select id="lugar-entrega" name="lugar-entrega" required>
+                    <option value="" disabled selected>Selecciona un lugar de entrega</option>
+                    <option value="Manzanillo">Manzanillo</option>
+                    <option value="Campechuela">Campechuela</option>
+                </select>
+                <input type="text" id="dinero-a-entregar" placeholder="Dinero a entregar (CUP)" readonly>
+                <button type="submit">Confirmar Envío</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Formulario de contacto -->
+    <section id="contacto">
+        <h2>Contáctanos</h2>
+        <form action="#" method="POST">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <textarea name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2025 Servicio de Remesas. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+       // Abrir el modal con efecto suave
+function abrirModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10); // Pequeña pausa para que la transición funcione
+}
+
+// Cerrar el modal con efecto suave
+function cerrarModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.remove('show');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300); // Tiempo igual a la duración de la transición
+}
+
+// Cerrar el modal al hacer clic fuera de él
+window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target === modal) {
+        cerrarModal();
+    }
+};
+
+
+        // Función para calcular el dinero a entregar en CUP
+        function calcularDineroAEntregar() {
+            const cantidad = parseFloat(document.getElementById('cantidad').value); // Obtener la cantidad ingresada
+            const dineroAEntregar = document.getElementById('dinero-a-entregar'); // Campo de dinero a entregar
+
+            if (!isNaN(cantidad)) { // Verificar si la cantidad es un número válido
+                if (cantidad < 100) {
+                    dineroAEntregar.value = `${(cantidad * 320).toLocaleString()} CUP`; // Multiplicar por 320 si es menor a 100
+                } else {
+                    dineroAEntregar.value = `${(cantidad * 340).toLocaleString()} CUP`; // Multiplicar por 340 si es igual o mayor a 100
+                }
+            } else {
+                dineroAEntregar.value = ''; // Limpiar el campo si no hay cantidad válida
+            }
+        }
+
+        // Evento para calcular el dinero a entregar cuando cambia la cantidad
+        document.getElementById('cantidad').addEventListener('input', calcularDineroAEntregar);
+
+        // Función para vaciar el modal
+        function vaciarModal() {
+            document.getElementById('form-remesa').reset(); // Limpiar el formulario
+            document.getElementById('dinero-a-entregar').value = ''; // Limpiar el campo de dinero a entregar
+        }
+
+       function enviarWhatsApp() {
+    // Obtener los valores del formulario
+    const cantidad = document.getElementById('cantidad').value.trim();
+    const nombreRemitente = document.getElementById('nombre-remitente').value.trim();
+    const nombreReceptor = document.getElementById('nombre-receptor').value.trim();
+    const telefonoReceptor = document.getElementById('telefono-receptor').value.trim();
+    const direccionReceptor = document.getElementById('direccion-receptor').value.trim();
+    const lugarEntrega = document.getElementById('lugar-entrega').value.trim();
+    const dineroAEntregar = document.getElementById('dinero-a-entregar').value.trim();
+
+    // Si falta algún valor, detener el proceso
+    if (!cantidad || !nombreRemitente || !nombreReceptor || !telefonoReceptor || !direccionReceptor || !lugarEntrega || !dineroAEntregar) {
+        alert('Por favor, completa todos los campos.');
+        return;
+    }
+
+    // Crear el mensaje de WhatsApp adornado con emojis 😎
+    const mensaje = `🚀 *Nuevo pedido de remesa* 🚀\n\n` +
+                    `💵 *Cantidad a enviar:* ${cantidad} USD\n` +
+                    `👤 *Nombre del remitente:* ${nombreRemitente}\n` +
+                    `👤 *Nombre del receptor:* ${nombreReceptor}\n` +
+                    `📱 *Teléfono del receptor:* ${telefonoReceptor}\n` +
+                    `🏠 *Dirección del receptor:* ${direccionReceptor}\n` +
+                    `📍 *Lugar de entrega:* ${lugarEntrega}\n` +
+                    `💰 *Dinero a entregar:* ${dineroAEntregar}\n\n` +
+                    `✅ *Confirmación automática desde la plataforma.*`;
+
+    // Codificar el mensaje para WhatsApp
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const urlWhatsApp = `https://wa.me/5354764569?text=${mensajeCodificado}`;
+
+    // Abrir WhatsApp en nueva pestaña
+    window.open(urlWhatsApp, '_blank');
+}
+
+document.getElementById('form-remesa').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evitar envío directo del formulario
+    
+    // Enviar mensaje por WhatsApp
+    enviarWhatsApp();
+
+    // Limpiar formulario después de enviar
+    document.getElementById('form-remesa').reset();
+    document.getElementById('dinero-a-entregar').value = '';
+    
+    // Cerrar el modal automáticamente
+    cerrarModal();
+});
+
+    </script>
+</body>
+</html>
