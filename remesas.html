@@ -229,7 +229,16 @@ footer {
     color: white;
     margin-top: 20px;
 }
+#dinero-a-entregar-container {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #555;
+}
 
+#dinero-a-entregar {
+    font-weight: bold;
+    color: #6c13be;
+}
     </style>
 </head>
 <body>
@@ -272,22 +281,18 @@ footer {
                     <option value="Manzanillo">Manzanillo</option>
                     <option value="Campechuela">Campechuela</option>
                 </select>
-                <input type="text" id="dinero-a-entregar" placeholder="Dinero a entregar (CUP)" readonly>
+                <div id="dinero-a-entregar-container">
+                    <strong>Cantidad a entregar:</strong> <span id="dinero-a-entregar"></span>
+                </div>
                 <button type="submit">Confirmar Envío</button>
             </form>
-            
         </div>
     </div>
 
     <!-- Formulario de contacto -->
     <section id="contacto">
         <h2>Contáctanos</h2>
-        <form action="#" method="POST">
-            <input type="text" name="nombre" placeholder="Nombre" required>
-            <input type="email" name="email" placeholder="Correo electrónico" required>
-            <textarea name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
-            <button type="submit">Enviar</button>
-        </form>
+        <a href="https://wa.me/5354764569?text=Hola,%20como%20hago%20una%20sobre%20Remesa" target="_blank">Contactar Soporte</a>
     </section>
 
     <!-- Pie de página -->
@@ -322,23 +327,20 @@ window.onclick = function(event) {
     }
 };
 
+function calcularDineroAEntregar() {
+    const cantidad = parseFloat(document.getElementById('cantidad').value); // Obtener la cantidad ingresada
+    const dineroAEntregar = document.getElementById('dinero-a-entregar'); // Campo de dinero a entregar
 
-        // Función para calcular el dinero a entregar en CUP
-        function calcularDineroAEntregar() {
-            const cantidad = parseFloat(document.getElementById('cantidad').value); // Obtener la cantidad ingresada
-            const dineroAEntregar = document.getElementById('dinero-a-entregar'); // Campo de dinero a entregar
-
-            if (!isNaN(cantidad)) { // Verificar si la cantidad es un número válido
-                if (cantidad < 100) {
-                    dineroAEntregar.value = `${(cantidad * 320).toLocaleString()} CUP`; // Multiplicar por 320 si es menor a 100
-                } else {
-                    dineroAEntregar.value = `${(cantidad * 340).toLocaleString()} CUP`; // Multiplicar por 340 si es igual o mayor a 100
-                }
-            } else {
-                dineroAEntregar.value = ''; // Limpiar el campo si no hay cantidad válida
-            }
+    if (!isNaN(cantidad)) { // Verificar si la cantidad es un número válido
+        if (cantidad < 100) {
+            dineroAEntregar.textContent = `${(cantidad * 320).toLocaleString()} CUP`; // Multiplicar por 320 si es menor a 100
+        } else {
+            dineroAEntregar.textContent = `${(cantidad * 340).toLocaleString()} CUP`; // Multiplicar por 340 si es igual o mayor a 100
         }
-
+    } else {
+        dineroAEntregar.textContent = ''; // Limpiar el campo si no hay cantidad válida
+    }
+}
         // Evento para calcular el dinero a entregar cuando cambia la cantidad
         document.getElementById('cantidad').addEventListener('input', calcularDineroAEntregar);
 
@@ -347,8 +349,7 @@ window.onclick = function(event) {
             document.getElementById('form-remesa').reset(); // Limpiar el formulario
             document.getElementById('dinero-a-entregar').value = ''; // Limpiar el campo de dinero a entregar
         }
-
-       function enviarWhatsApp() {
+        function enviarWhatsApp() {
     // Obtener los valores del formulario
     const cantidad = document.getElementById('cantidad').value.trim();
     const nombreRemitente = document.getElementById('nombre-remitente').value.trim();
@@ -356,10 +357,10 @@ window.onclick = function(event) {
     const telefonoReceptor = document.getElementById('telefono-receptor').value.trim();
     const direccionReceptor = document.getElementById('direccion-receptor').value.trim();
     const lugarEntrega = document.getElementById('lugar-entrega').value.trim();
-    const dineroAEntregar = document.getElementById('dinero-a-entregar').value.trim();
+    const dineroAEntregar = document.getElementById('dinero-a-entregar').textContent.trim(); // Cambiado a textContent
 
     // Si falta algún valor, detener el proceso
-    if (!cantidad || !nombreRemitente || !nombreReceptor || !telefonoReceptor || !direccionReceptor || !lugarEntrega || !dineroAEntregar) {
+    if (!cantidad || !nombreRemitente || !nombreReceptor || !telefonoReceptor || !direccionReceptor || !lugarEntrega) {
         alert('Por favor, completa todos los campos.');
         return;
     }
@@ -391,7 +392,7 @@ document.getElementById('form-remesa').addEventListener('submit', function(event
 
     // Limpiar formulario después de enviar
     document.getElementById('form-remesa').reset();
-    document.getElementById('dinero-a-entregar').value = '';
+    document.getElementById('dinero-a-entregar').textContent = ''; // Limpiar el contenido del span
     
     // Cerrar el modal automáticamente
     cerrarModal();
