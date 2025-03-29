@@ -257,7 +257,7 @@ footer {
     <section id="tasas">
         <h2>Tasas de Cambio</h2>
         <div class="cartel-tasas">
-            <p>💵 <strong>100 USD</strong> vía Zelle → <strong>34,000 CUP</strong></p>
+            <p>💵 <strong>100 USD</strong> vía Zelle → <strong>34,500 CUP</strong></p>
             <p>🏦 <strong>105 USD</strong> vía Zelle → <strong>100 USD</strong></p>
             <p>💳 <strong>100 USD</strong> vía Zelle → <strong>100 MLC</strong></p>
             <p>⚠️ <strong>Menos de 100 USD</strong> → <strong>320 CUP por cada dólar</strong></p>
@@ -335,7 +335,7 @@ function calcularDineroAEntregar() {
         if (cantidad < 100) {
             dineroAEntregar.textContent = `${(cantidad * 320).toLocaleString()} CUP`; // Multiplicar por 320 si es menor a 100
         } else {
-            dineroAEntregar.textContent = `${(cantidad * 340).toLocaleString()} CUP`; // Multiplicar por 340 si es igual o mayor a 100
+            dineroAEntregar.textContent = `${(cantidad * 345).toLocaleString()} CUP`; // Multiplicar por 340 si es igual o mayor a 100
         }
     } else {
         dineroAEntregar.textContent = ''; // Limpiar el campo si no hay cantidad válida
