@@ -333,7 +333,7 @@ function calcularDineroAEntregar() {
 
     if (!isNaN(cantidad)) { // Verificar si la cantidad es un número válido
         if (cantidad < 100) {
-            dineroAEntregar.textContent = `${(cantidad * 320).toLocaleString()} CUP`; // Multiplicar por 320 si es menor a 100
+            dineroAEntregar.textContent = `${(cantidad * 330).toLocaleString()} CUP`; // Multiplicar por 320 si es menor a 100
         } else {
             dineroAEntregar.textContent = `${(cantidad * 345).toLocaleString()} CUP`; // Multiplicar por 340 si es igual o mayor a 100
         }
