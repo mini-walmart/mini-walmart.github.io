@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorteo Premio del Día</title>
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --background: #f8f9fa;
+      --text-dark: #2d3436;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      transition: background 1s ease;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      color: var(--primary-color);
+    }
+
+    .premio-dia {
+      text-align: center;
+      margin: 2rem 0;
+      animation: pulse 2s infinite;
+    }
+    .premio-dia img {
+      width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .premio-dia h2 {
+      margin-top: 1rem;
+      color: #222;
+    }
+
+    @keyframes pulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    .reglas {
+      background: rgba(255,255,255,0.9);
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 1rem auto;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    #countdown, .number-grid, .status, #playButton {
+      margin-top: 2rem;
+    }
+
+    #countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .time-segment {
+      text-align: center;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .time-number {
+      font-size: 2rem;
+      color: var(--primary-color);
+    }
+
+    .time-label {
+      font-size: 0.8rem;
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+      gap: 10px;
+      max-width: 600px;
+    }
+
+    .number {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: background 0.3s, transform 0.2s;
+    }
+    .number:hover:not(.taken) {
+      transform: scale(1.05);
+    }
+    .number.selected {
+      background: var(--secondary-color);
+      color: white;
+      animation: pulse 1s infinite;
+    }
+    .number.taken {
+      background: #ec1518;
+      color: white;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    #playButton {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      display: none;
+      transition: background 0.3s ease;
+    }
+
+    #playButton:hover {
+      background: #1ebe5b;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+    .modal input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 80%;
+      margin-bottom: 1rem;
+    }
+    .modal a {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sorteo de Hoy</h1>
+
+  <div class="premio-dia">
+    <img src="premio.jpg" alt="Premio del Día" />
+    <h2>Premio del día: ¡Gran Televisor 50"!</h2>
+  </div>
+
+  <div class="reglas">
+    Cada número tiene un valor de <strong>$5 USD</strong>. <br>
+    El sorteo se realizará el mismo día al completar todos los números.
+  </div>
+
+  <div id="countdown">
+    <div class="time-segment">
+      <div class="time-number" id="days">00</div>
+      <div class="time-label">Días</div>
+    </div>
+    <div class="time-segment">
+      <div class="time-number" id="hours">00</div>
+      <div class="time-label">Horas</div>
+    </div>
+    <div class="time-segment">
+      <div class="time-number" id="minutes">00</div>
+      <div class="time-label">Min</div>
+    </div>
+    <div class="time-segment">
+      <div class="time-number" id="seconds">00</div>
+      <div class="time-label">Seg</div>
+    </div>
+  </div>
+
+  <div class="number-grid" id="numberGrid"></div>
+
+  <button id="playButton">📲 REALIZAR JUGADA</button>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2>Resumen de tu jugada</h2>
+      <p id="resumenJugada"></p>
+      <input type="text" id="playerName" placeholder="Tu nombre" />
+      <a id="whatsappLink" href="#" target="_blank">Enviar por WhatsApp</a>
+    </div>
+  </div>
+
+  <script>
+    const takenNumbers = [3, 100, 11, 15, 23];
+    let selectedNumbers = [];
+
+    const grid = document.getElementById('numberGrid');
+    const playButton = document.getElementById('playButton');
+    const modal = document.getElementById('modal');
+    const playerName = document.getElementById('playerName');
+    const whatsappLink = document.getElementById('whatsappLink');
+    const resumenJugada = document.getElementById('resumenJugada');
+
+    for (let i = 0; i <= 100; i++) {
+      const box = document.createElement('div');
+      box.className = 'number';
+      box.textContent = i;
+
+      if (takenNumbers.includes(i)) {
+        box.classList.add('taken');
+      }
+
+      box.addEventListener('click', () => {
+        if (!box.classList.contains('taken')) {
+          const num = parseInt(box.textContent);
+          if (selectedNumbers.includes(num)) {
+            selectedNumbers = selectedNumbers.filter(n => n !== num);
+            box.classList.remove('selected');
+          } else {
+            selectedNumbers.push(num);
+            box.classList.add('selected');
+          }
+          playButton.style.display = selectedNumbers.length > 0 ? 'inline-block' : 'none';
+        }
+      });
+
+      grid.appendChild(box);
+    }
+
+    playButton.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      const total = selectedNumbers.length * 5;
+      resumenJugada.innerText = `Has seleccionado los números: ${selectedNumbers.join(', ')}. Total a pagar: $${total} USD.`;
+      document.getElementById('playerName').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    playerName.addEventListener('input', () => {
+      const name = playerName.value.trim();
+      const total = selectedNumbers.length * 5;
+      if (name.length > 0 && selectedNumbers.length > 0) {
+        const msg = `Hola, soy ${name}. Mis números son: ${selectedNumbers.join(', ')}. Total a pagar: $${total} USD.`;
+        whatsappLink.href = `https://wa.me/5354764569?text=${encodeURIComponent(msg)}`;
+      } else {
+        whatsappLink.href = '#';
+      }
+    });
+
+    whatsappLink.addEventListener('click', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.number.selected').forEach(el => el.classList.remove('selected'));
+        selectedNumbers = [];
+        localStorage.setItem('ultimaJugada', JSON.stringify({ nombre: playerName.value, numeros: selectedNumbers }));
+        playerName.value = '';
+        modal.style.display = 'none';
+        playButton.style.display = 'none';
+      }, 500);
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+
+    // Timer
+    const countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+      if (distance < 0) clearInterval(timerInterval);
+    };
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Cambiar fondo dinámicamente
+    const fondos = ["#ffecd2", "#d2fcff", "#e8d2ff", "#fceabb"];
+    let i = 0;
+    setInterval(() => {
+      document.body.style.background = `linear-gradient(135deg, ${fondos[i]} 0%, #fcb69f 100%)`;
+      i = (i + 1) % fondos.length;
+    }, 8000);
+  </script>
+</body>
+</html>
