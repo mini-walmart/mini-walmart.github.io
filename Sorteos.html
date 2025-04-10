@@ -4,248 +4,298 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Sorteo Premio del Día</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #FF6B6B;
-      --secondary-color: #4ECDC4;
-      --background: #f8f9fa;
-      --text-dark: #2d3436;
+      --primary-color: #FF4C4C;
+      --secondary-color: #FFD93D;
+      --dark-bg: #1a1a1a;
+      --gold: #FFD700;
+      --text-light: #fff;
+      --text-shadow: rgba(0, 0, 0, 0.4);
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-      color: var(--text-dark);
+      background: radial-gradient(circle at top, #8B0000 0%, #000000 100%);
+      color: var(--text-light);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 2rem 1rem;
-      transition: background 1s ease;
+      background-attachment: fixed;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 3rem;
       text-align: center;
-      color: var(--primary-color);
+      color: var(--gold);
+      text-shadow: 2px 2px 10px var(--text-shadow);
+      margin-bottom: 1.5rem;
     }
 
     .premio-dia {
       text-align: center;
-      margin: 2rem 0;
-      animation: pulse 2s infinite;
+      margin-bottom: 2rem;
+      animation: float 3s ease-in-out infinite;
     }
     .premio-dia img {
       width: 90%;
-      max-width: 300px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      max-width: 350px;
+      border-radius: 20px;
+      border: 5px solid var(--gold);
+      box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
     }
     .premio-dia h2 {
+      color: var(--secondary-color);
       margin-top: 1rem;
-      color: #222;
-      font-size: 1.2rem;
-    }
-
-    @keyframes pulse {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(1.2); }
+      font-size: 1.5rem;
+      text-shadow: 1px 1px 5px var(--text-shadow);
     }
 
     .reglas {
-      background: rgba(255,255,255,0.9);
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      max-width: 90%;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem 2rem;
+      border-radius: 15px;
       text-align: center;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      max-width: 600px;
+      border: 2px solid var(--gold);
+      margin-bottom: 2rem;
     }
 
     #countdown {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 1rem;
-      margin-top: 2rem;
     }
-
     .time-segment {
-      text-align: center;
-      background: white;
+      background: var(--primary-color);
       padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      min-width: 60px;
+      border-radius: 12px;
+      min-width: 70px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
-
     .time-number {
-      font-size: 1.5rem;
-      color: var(--primary-color);
+      font-size: 2rem;
+      font-weight: bold;
     }
-
     .time-label {
       font-size: 0.8rem;
     }
 
     .number-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 12px;
       width: 100%;
-      max-width: 600px;
-      margin-top: 2rem;
+      max-width: 800px;
+      margin: 2rem 0;
     }
-
     .number {
-      background: white;
-      padding: 0.8rem;
-      border-radius: 10px;
+      background: #fff;
+      color: #000;
+      padding: 1rem;
+      border-radius: 15px;
       text-align: center;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      transition: background 0.3s, transform 0.2s;
-      font-size: 1rem;
+      font-size: 1.2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s, background 0.3s;
     }
     .number:hover:not(.taken) {
-      transform: scale(1.05);
+      transform: scale(1.1);
+      background: #f8d100;
     }
     .number.selected {
       background: var(--secondary-color);
-      color: white;
-      animation: pulse 1s infinite;
+      color: #000;
+      animation: pulseSelected 1.5s infinite;
     }
     .number.taken {
-      background: #ec1518;
-      color: white;
+      background: #444;
+      color: #fff;
+      text-decoration: line-through;
       opacity: 0.6;
       pointer-events: none;
     }
 
     #playButton {
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      background: #25D366;
-      color: white;
+      padding: 1.2rem 2rem;
+      font-size: 1.3rem;
+      background: linear-gradient(145deg, var(--gold), #FFA500);
+      color: #000;
       border: none;
-      border-radius: 30px;
+      border-radius: 40px;
       cursor: pointer;
       display: none;
-      transition: background 0.3s ease;
-      margin: 2rem 0;
-      width: 90%;
-      max-width: 300px;
+      margin-top: 2rem;
+      box-shadow: 0 0 20px var(--gold);
     }
 
     #playButton:hover {
-      background: #1ebe5b;
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--gold);
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 999;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
       justify-content: center;
       align-items: center;
-      padding: 1rem;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      z-index: 1000;
     }
     .modal-content {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-      width: 100%;
+      background: #fff;
+      color: #000;
+      padding: 2rem;
+      border-radius: 20px;
       max-width: 400px;
+      width: 90%;
+      box-shadow: inset 0 0 10px #ccc;
+      text-align: center;
     }
     .modal input {
-      padding: 0.5rem;
+      width: 100%;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 10px;
+      border: 2px solid #ccc;
       font-size: 1rem;
-      width: 90%;
-      margin-bottom: 1rem;
     }
     .modal a {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       background: #25D366;
       color: white;
-      padding: 0.8rem 1.5rem;
+      padding: 1rem 2rem;
       border-radius: 30px;
       text-decoration: none;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+    .modal a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #25D366;
     }
 
-    @media (max-width: 480px) {
-      .time-number {
-        font-size: 1.2rem;
+    @keyframes pulseSelected {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
       }
       .number {
-        padding: 0.6rem;
-        font-size: 0.9rem;
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+      .modal-content {
+        padding: 1.5rem;
       }
     }
+    .leyenda {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+  border: 2px dashed var(--secondary-color);
+  color: var(--text-light);
+  font-size: 1.1rem;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+.leyenda h3 {
+  margin-bottom: 0.8rem;
+  color: var(--gold);
+}
+.leyenda-items {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.leyenda-item {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.leyenda-item.disponible {
+  background: #ffffff;
+  color: #000000;
+}
+.leyenda-item.seleccionado {
+  background: var(--secondary-color);
+  color: #000;
+  animation: pulseSelected 2s infinite;
+}
+.leyenda-item.ocupado {
+  background: #444;
+  color: #fff;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
   </style>
 </head>
 <body>
   <h1>Sorteo de Hoy</h1>
-
   <div class="premio-dia">
-    <img src="premio.jpg" alt="Premio del Día" />
-    <h2>Premio del día: ¡Gran Televisor 50"!</h2>
+    <img src="convertidor.jpg" alt="Premio del Día">
+    <h2>Premio del día: ¡Estacion Electrica de 600 wats"!</h2>
   </div>
-
   <div class="reglas">
-    Cada número tiene un valor de <strong>$5 USD</strong>. <br>
-    El sorteo se realizará el mismo día al completar todos los números.
+    Cada número tiene un valor de <strong>$5 USD</strong>.<br>
+    El sorteo se realizará el mismo día al completar todos los números por el resultado de la Bolita (Lotería Nacional de Cuba).<br>
   </div>
-
   <div id="countdown">
-    <div class="time-segment">
-      <div class="time-number" id="days">00</div>
-      <div class="time-label">Días</div>
-    </div>
-    <div class="time-segment">
-      <div class="time-number" id="hours">00</div>
-      <div class="time-label">Horas</div>
-    </div>
-    <div class="time-segment">
-      <div class="time-number" id="minutes">00</div>
-      <div class="time-label">Min</div>
-    </div>
-    <div class="time-segment">
-      <div class="time-number" id="seconds">00</div>
-      <div class="time-label">Seg</div>
-    </div>
+    <div class="time-segment"><div class="time-number" id="days">00</div><div class="time-label">Días</div></div>
+    <div class="time-segment"><div class="time-number" id="hours">00</div><div class="time-label">Horas</div></div>
+    <div class="time-segment"><div class="time-number" id="minutes">00</div><div class="time-label">Min</div></div>
+    <div class="time-segment"><div class="time-number" id="seconds">00</div><div class="time-label">Seg</div></div>
   </div>
-
+  
+  
   <div class="number-grid" id="numberGrid"></div>
-
-  <button id="playButton">📲 REALIZAR JUGADA</button>
-
+  <button id="playButton">🎰 Realizar Jugada</button>
   <div class="modal" id="modal">
     <div class="modal-content">
       <h2>Resumen de tu jugada</h2>
       <p id="resumenJugada"></p>
       <input type="text" id="playerName" placeholder="Tu nombre" />
-      <a id="whatsappLink" href="#" target="_blank">Enviar por WhatsApp</a>
+      <a id="whatsappLink" href="#" target="_blank">📲 Enviar por WhatsApp</a>
     </div>
   </div>
-
   <script>
-    const takenNumbers = [3, 100, 11, 15, 23];
+    const takenNumbers = [];
     let selectedNumbers = [];
-
     const grid = document.getElementById('numberGrid');
     const playButton = document.getElementById('playButton');
     const modal = document.getElementById('modal');
@@ -257,11 +307,7 @@
       const box = document.createElement('div');
       box.className = 'number';
       box.textContent = i;
-
-      if (takenNumbers.includes(i)) {
-        box.classList.add('taken');
-      }
-
+      if (takenNumbers.includes(i)) box.classList.add('taken');
       box.addEventListener('click', () => {
         if (!box.classList.contains('taken')) {
           const num = parseInt(box.textContent);
@@ -275,7 +321,6 @@
           playButton.style.display = selectedNumbers.length > 0 ? 'inline-block' : 'none';
         }
       });
-
       grid.appendChild(box);
     }
 
@@ -289,7 +334,7 @@
     playerName.addEventListener('input', () => {
       const name = playerName.value.trim();
       const total = selectedNumbers.length * 5;
-      if (name.length > 0 && selectedNumbers.length > 0) {
+      if (name && selectedNumbers.length > 0) {
         const msg = `Hola, soy ${name}. Mis números son: ${selectedNumbers.join(', ')}. Total a pagar: $${total} USD.`;
         whatsappLink.href = `https://wa.me/5354764569?text=${encodeURIComponent(msg)}`;
       } else {
@@ -312,34 +357,59 @@
       if (e.target === modal) modal.style.display = 'none';
     });
 
-    // Timer
     const countDownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000);
     const updateTimer = () => {
       const now = new Date().getTime();
       const distance = countDownDate - now;
-
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
       document.getElementById('days').textContent = String(days).padStart(2, '0');
       document.getElementById('hours').textContent = String(hours).padStart(2, '0');
       document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
       document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-
       if (distance < 0) clearInterval(timerInterval);
     };
     const timerInterval = setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Cambiar fondo dinámicamente
-    const fondos = ["#ffecd2", "#d2fcff", "#e8d2ff", "#fceabb"];
-    let i = 0;
-    setInterval(() => {
-      document.body.style.background = `linear-gradient(135deg, ${fondos[i]} 0%, #fcb69f 100%)`;
-      i = (i + 1) % fondos.length;
-    }, 8000);
+
+    
   </script>
+  <div class="leyenda">
+    <h3>📌 Leyenda de los números</h3>
+    <div class="leyenda-items">
+      <span class="leyenda-item disponible">Disponible</span>
+      <span class="leyenda-item seleccionado">Seleccionado</span>
+      <span class="leyenda-item ocupado">Ocupado</span>
+    </div>
+  </div>
+  <script>
+    // Fecha objetivo: 15 de abril a las 10:00 PM hora de Cuba (GMT-4)
+    const countdownDate = new Date("2025-04-15T22:00:00-04:00").getTime();
+  
+    const countdownFunction = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+  
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  
+      document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+      document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+      document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+      document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+  
+      // Si se termina el conteo
+      if (distance < 0) {
+        clearInterval(countdownFunction);
+        document.getElementById("countdown").innerHTML = "<h2>🎉 ¡El sorteo ha comenzado! 🎉</h2>";
+      }
+    }, 1000);
+  </script>
+  
 </body>
 </html>
