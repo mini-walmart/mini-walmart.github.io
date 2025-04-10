@@ -262,7 +262,56 @@
   text-decoration: line-through;
   opacity: 0.6;
 }
+.ganador-section {
+  margin: 2rem 0;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
 
+.ganador-container {
+  background: rgba(255, 255, 255, 0.1);
+  border: 3px solid var(--gold);
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: inline-block;
+  margin-top: 1rem;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+}
+
+#numeroGanador {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 4rem;
+  color: var(--gold);
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  letter-spacing: 10px;
+  position: relative;
+}
+
+#numeroGanador::after {
+  content: "??";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ffffff80;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Cuando se revele el número */
+#numeroGanador.revelado {
+  animation: revelar 1s ease-out;
+  color: #00ff00;
+  text-shadow: 0 0 20px #00ff00;
+}
+
+@keyframes revelar {
+  0% { opacity: 0; transform: rotateX(90deg); }
+  100% { opacity: 1; transform: rotateX(0); }
+}
   </style>
 </head>
 <body>
@@ -281,7 +330,12 @@
     <div class="time-segment"><div class="time-number" id="minutes">00</div><div class="time-label">Min</div></div>
     <div class="time-segment"><div class="time-number" id="seconds">00</div><div class="time-label">Seg</div></div>
   </div>
-  
+  <div class="ganador-section">
+    <h2>Número Ganador</h2>
+    <div class="ganador-container">
+      <span id="numeroGanador">??</span>
+    </div>
+  </div>
   
   <div class="number-grid" id="numberGrid"></div>
   <button id="playButton">🎰 Realizar Jugada</button>
@@ -393,6 +447,8 @@
         document.getElementById("countdown").innerHTML = "<h2>🎉 ¡El sorteo ha comenzado! 🎉</h2>";
       }
     }, 1000);
+
+    
   </script>
   
 </body>
